@@ -1,0 +1,180 @@
+================================================================================
+  ENQUIRY AND QUOTATION AUTOMATION SYSTEM — PROJECT NOTES
+================================================================================
+
+1. WHAT IS THIS APPLICATION?
+--------------------------------------------------------------------------------
+This is a modern, responsive web application for logistics, courier, and 
+freight forwarding companies (similar to DHL, FedEx, or cargo shipping agencies).
+
+In the real world, customers frequently call or email asking:
+  "How much will it cost to ship 50 boxes of cargo from Dubai to London?"
+
+Usually, staff handle this with messy spreadsheets, sticky notes, and lost emails.
+This web app replaces that with a clean, 100% automated 8-stage workflow:
+Taking the customer request -> checking missing details -> getting carrier prices -> 
+adding profit margin & tax -> sending a formal quotation -> recording customer decision.
+
+NOTE: This is a standalone Frontend UI Demo. It requires NO backend database, 
+NO external server, and sends NO real emails. Everything runs and persists 
+safely inside the web browser using local storage.
+
+
+2. THE 8-STEP BUSINESS WORKFLOW (FROM START TO FINISH)
+--------------------------------------------------------------------------------
+
+  [1. Customer Enquiry]
+         │
+         ▼
+  [2. Acknowledgement]  ─── Instant confirmation logged in audit history
+         │
+         ▼
+  [3. Information Verification]
+         │
+         ├─► If info is missing: [4. Customer Clarification Email Preview]
+         │
+         ▼ (When all 8 verification items are COMPLETE)
+  [5. Agent Rate Request (RFP)] ─── Request wholesale rates from airlines/shipping lines
+         │
+         ▼
+  [6. Rate Entry & Live Calculation] ─── Carrier Cost + Margin % + Tax % = Price
+         │
+         ▼
+  [7. Quotation Preparation] ─── Professional proposal letter with letterhead & PDF print
+         │
+         ▼
+  [8. Customer Decision] ─── Mark as ACCEPTED (Shipment booked) or REJECTED
+
+
+3. DETAILED BREAKDOWN OF EACH SCREEN
+--------------------------------------------------------------------------------
+
+1. DASHBOARD (/dashboard)
+   - The central command center for managers and staff.
+   - Shows 6 live metric cards (Total Enquiries, Awaiting Info, Awaiting Rates, 
+     Quotes Prepared, Quotes Awaiting Response, Completed).
+   - Visual progress bar showing shipment counts across all stages.
+   - Quick-action table of recent enquiries.
+   - Real-time chronological activity audit log.
+
+2. CUSTOMER ENQUIRIES (/enquiries)
+   - Master list of all incoming shipment requests.
+   - Live search by customer name, origin, destination, or cargo type.
+   - Filter dropdowns for Freight Type (Air, Ocean, Road, Courier) and Status.
+   - Interactive slide-out "Quick View Drawer" to inspect any enquiry instantly.
+   - Multi-column sorting and clean pagination.
+
+3. CREATE ENQUIRY (/enquiries/new)
+   - Working registration form for new customer requests.
+   - Validates required fields, email formatting, and positive numbers.
+   - Has a handy "Fill Sample Data" button to auto-fill realistic values in 1 click.
+   - Generates a unique tracking ID (e.g., ENQ-2025-0013).
+
+4. INFORMATION VERIFICATION (/verification)
+   - A critical quality check before spending time asking carriers for rates.
+   - 8-point checklist:
+     [1] Customer contact details
+     [2] Service type (Air, Sea, Road, Courier)
+     [3] Origin and destination cities
+     [4] Cargo description (commodity)
+     [5] Package quantity
+     [6] Weight and volume
+     [7] Shipment ready date
+     [8] Required delivery date
+   - Each item can be set to: COMPLETE (Green), MISSING (Red), or CLARIFY (Amber).
+   - If ANY required item is missing:
+     * A warning banner appears.
+     * The system blocks you from proceeding to rate requests.
+     * You can click "Draft Clarification Message" to preview an email asking 
+       the client for the missing info.
+   - Once all 8 are green, the button unlocks: "Ready for Rate Request".
+
+5. AGENT RATE REQUESTS (/rate-requests)
+   - Connects with partner freight agents who supply plane/ship cargo space.
+   - Pre-seeded with 5 specialized freight agents (Atlas Global, Pacific Wave, 
+     Trans-Euro, SkyWings Cargo, Desert Star Express).
+   - Preview formal RFP emails with cargo dimensions before marking as sent.
+   - Status tracking: Draft -> Ready to Send -> Sent (Demo) -> Rate Received.
+
+6. RATE ENTRY & PRICING ENGINE (/rate-requests/[id]/rate)
+   - Enter the wholesale costs provided by the carrier:
+     * Base Freight Rate
+     * Bunker Fuel Surcharge
+     * Handling / Terminal Charges
+     * Customs & Documentation
+     * Other Charges
+   - Set your profit markup % (e.g., 18%) using a live slider or number box.
+   - Set optional sales tax / VAT % (e.g., 5%).
+   - Dynamic math runs instantly as you type:
+       Total Carrier Cost = Base + Fuel + Handling + Customs + Other
+       Selling Price = Total Cost x (1 + Markup% / 100)
+       Tax Amount = Selling Price x (Tax% / 100)
+       Final Customer Total = Selling Price + Tax Amount
+   - Click "Save Rate & Create Quotation" to automatically generate the quote.
+
+7. QUOTATIONS (/quotations and /quotations/[id])
+   - Commercial quotation register tracking costs, selling prices, and validity.
+   - Formal corporate proposal sheet with:
+     * Company letterhead & VAT/TRN tax number
+     * Complete shipment specifications
+     * Transparent itemized cost schedule
+     * Validity period (e.g., Valid for 14 days)
+     * Standard freight terms & conditions
+   - Actions:
+     * "Print / Save PDF": Uses clean browser printing with navigation hidden.
+     * "Approve (Demo)": Internal manager approval.
+     * "Send Quote (Demo)": Simulated email dispatch to the client.
+     * "Mark Accepted": Client agreed, shipment confirmed!
+     * "Mark Rejected": Client declined (records reason).
+
+8. WORKFLOW MONITOR (/workflow)
+   - An 11-stage visual stepper pipeline.
+   - Color-coded stage nodes: Completed (Green), In Progress (Blue), 
+     Blocked (Amber/Red), and Pending (Gray).
+   - Shows timestamps and intelligent next-step guidance buttons.
+
+9. SETTINGS (/settings)
+   - Customize company profile name, address, email, and tax number.
+   - Set system defaults: default currency (USD, EUR, GBP, AED, SGD), default 
+     markup %, default VAT %, quote validity days, and freight terms.
+   - "Reset Demo Data" button: Re-seeds the system back to factory demo state.
+
+
+4. HOW DATA IS SAVED & PERSISTED
+--------------------------------------------------------------------------------
+- Everything you create, edit, or delete is saved in browser localStorage.
+- You can refresh the page, close the tab, or restart your computer; all your 
+  changes stay intact.
+- If you ever want a clean slate, go to Settings -> click "Reset Demo Data".
+
+
+5. 5-MINUTE TEST DRIVE WALKTHROUGH
+--------------------------------------------------------------------------------
+Try this simple flow to see the whole system work:
+
+1. Open http://localhost:3000 in your browser.
+2. Go to "Customer Enquiries" in the sidebar.
+3. Click "Verify Info" on enquiry ENQ-2025-0002 (Nordic Living ApS).
+4. Notice the 2 missing red items. Toggle them to "Complete" (Green).
+5. Click the blue button: "Mark All Verified & Ready for RFP".
+6. In Rate Requests, select an agent (e.g. Trans-Euro Logistics) and click 
+   "Enter Received Rate".
+7. Adjust the markup to 20% and click "Save Rate & Generate Quotation".
+8. In Quotations, open the quote, click "Approve", then "Send Demo", then 
+   "Mark Accepted".
+9. Return to the Dashboard and watch your accepted quote reflected in the KPIs!
+
+
+6. HOW TO RUN THE PROJECT ON ANY COMPUTER
+--------------------------------------------------------------------------------
+1. Ensure Node.js (v18+ or v20+) is installed.
+2. Open terminal in the project folder:
+     cd courier
+3. Install dependencies:
+     npm install
+4. Start development server:
+     npm run dev
+5. Open browser at:
+     http://localhost:3000
+
+================================================================================
