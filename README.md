@@ -37,7 +37,7 @@ $$\text{Customer Enquiry} \longrightarrow \text{Acknowledgement} \longrightarrow
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/Abuthalib0206/courier_demo.git
+git clone https://github.com/Abuthalib2002/courier_demo.git
 cd courier_demo
 npm install
 ```
@@ -63,6 +63,6 @@ npm run start
 
 This project is optimized for 1-click deployment on **Vercel**:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbuthalib0206%2Fcourier_demo)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAbuthalib2002%2Fcourier_demo)
 
 Or import the repository directly into [Vercel](https://vercel.com) or [Netlify](https://netlify.com).
